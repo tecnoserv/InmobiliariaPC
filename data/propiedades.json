@@ -1,0 +1,72 @@
+[
+  {
+    "id": "PC-001",
+    "titulo": "Departamento 2 amb · Plaza Mitre",
+    "operacion": "venta",
+    "tipo": "departamento",
+    "barrio": "Plaza Mitre",
+    "direccion": "Falucho 2300",
+    "ambientes": 2,
+    "dormitorios": 1,
+    "banos": 1,
+    "superficie": 45,
+    "precio": 74000000,
+    "moneda": "$",
+    "amenities": [
+      "balcón",
+      "lavadero"
+    ],
+    "imagenes": [
+      "https://images.unsplash.com/photo-1515263487990-61b07816b324?q=80&w=1200&auto=format&fit=crop"
+    ],
+    "descripcion": "Luminoso, reciclado a nuevo. A metros del centro.",
+    "destacada": true
+  },
+  {
+    "id": "PC-002",
+    "titulo": "Casa 4 amb · Chauvin con cochera",
+    "operacion": "alquiler",
+    "tipo": "casa",
+    "barrio": "Chauvin",
+    "direccion": "Sarmiento 3400",
+    "ambientes": 4,
+    "dormitorios": 3,
+    "banos": 2,
+    "superficie": 120,
+    "precio": 450000,
+    "moneda": "$",
+    "amenities": [
+      "patio",
+      "parrilla",
+      "cochera"
+    ],
+    "imagenes": [
+      "https://images.unsplash.com/photo-1505691723518-36a5ac3b2b8f?q=80&w=1200&auto=format&fit=crop"
+    ],
+    "descripcion": "Casa estilo clásico, excelente estado.",
+    "destacada": true
+  },
+  {
+    "id": "PC-003",
+    "titulo": "Monoambiente · Güemes a 2 cuadras del mar",
+    "operacion": "temporario",
+    "tipo": "departamento",
+    "barrio": "Güemes",
+    "direccion": "Olavarría 2100",
+    "ambientes": 1,
+    "dormitorios": 0,
+    "banos": 1,
+    "superficie": 28,
+    "precio": 35000,
+    "moneda": "$",
+    "amenities": [
+      "equipado",
+      "wifi"
+    ],
+    "imagenes": [
+      "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?q=80&w=1200&auto=format&fit=crop"
+    ],
+    "descripcion": "Ideal escapadas, vista lateral al mar.",
+    "destacada": false
+  }
+]
