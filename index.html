@@ -1,25 +1,50 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Perez Carrasco · Inmobiliaria</title>
-  <meta name="description" content="Perez Carrasco Inmobiliaria — ventas, alquileres y temporarios. Encontrá tu próxima propiedad.">
+  <meta name="description"
+    content="Perez Carrasco Inmobiliaria — ventas, alquileres y temporarios. Encontrá tu próxima propiedad.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Lora:wght@600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkfQZfL3Z9ZqZP4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Lora:wght@600;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkfQZfL3Z9ZqZP4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"
+    referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="css/styles.css" />
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
 </head>
+
 <body>
 
 
   <!-- Header -->
 <header class="site-header">
   <div class="container header-grid">
-    
-    <!-- Menú izquierdo -->
-    <nav class="header-nav nav-left" aria-label="Menú izquierdo">
+    <div class="header-logo">
+      <a href="index.html" class="logo">
+        <img src="logoPC.png" alt="Perez Carrasco Inmobiliaria">
+      </a>
+
+      <!-- Flecha bajo el logo -->
+      <button class="subheader-toggle" aria-controls="subheader" aria-expanded="false" aria-label="Abrir menú">
+        <i class="fa-solid fa-chevron-down"></i>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- Sub-header (panel deslizante fijo) -->
+<nav id="subheader" class="sub-header" aria-hidden="true">
+  <div class="container subheader-grid">
+
+    <!-- Menú izquierda -->
+    <nav class="header-nav nav-left" aria-label="Menú principal - izquierda">
       <ul class="nav-list">
         <li><a href="#inicio">Inicio</a></li>
         <li><a href="#destacadas">Destacadas</a></li>
@@ -27,7 +52,7 @@
           <button class="submenu-toggle" aria-haspopup="true" aria-expanded="false">
             Servicios <i class="fa-solid fa-chevron-down"></i>
           </button>
-           <ul class="submenu" aria-label="submenu servicios">
+          <ul class="submenu" aria-label="submenu servicios">
             <li><a href="servicios/ventas/ventas.html">Ventas</a></li>
             <li><a href="servicios/alquileres/alquileres.html">Alquileres</a></li>
             <li><a href="servicios/temporarios/temporarios.html">Temporarios</a></li>
@@ -36,27 +61,23 @@
       </ul>
     </nav>
 
-    <!-- Logo centrado -->
-    <div class="header-logo">
-      <a href="index.html" class="brand">Perez <span>Carrasco</span></a>
-    </div>
-
-    <!-- Menú derecho -->
-    <nav class="header-nav nav-right" aria-label="Menú derecho">
+    <!-- Menú derecha -->
+    <nav class="header-nav nav-right" aria-label="Menú principal - derecha">
       <ul class="nav-list">
         <li><a href="#quienes-somos">Quiénes somos</a></li>
         <li><a href="#contacto">Contacto</a></li>
       </ul>
     </nav>
 
-    <!-- Toggle móvil -->
-    <button class="nav-toggle" aria-label="Abrir menú" aria-expanded="false">
-      <i class="fa-solid fa-bars"></i>
-    </button>
-    
   </div>
-</header>
+</nav>
 
+<!-- (Opcional) Toggle móvil adicional dentro del header si lo necesitás -->
+<!--
+<button class="nav-toggle" aria-label="Abrir menú" aria-expanded="false">
+  <i class="fa-solid fa-bars"></i>
+</button>
+-->
 
 
   <!-- Hero -->
@@ -64,7 +85,9 @@
     <div class="hero-overlay"></div>
     <div class="container hero-content">
       <h1>Tu hogar, nuestra búsqueda</h1>
-      <p><a href="servicios/ventas/ventas.html">Ventas</a> · <a href="servicios/alquileres/alquileres.html">Alquileres</a> · <a href="servicios/temporarios/temporarios.html">Temporarios</a></p>
+      <p><a href="servicios/ventas/ventas.html">Ventas</a> · <a
+          href="servicios/alquileres/alquileres.html">Alquileres</a> · <a
+          href="servicios/temporarios/temporarios.html">Temporarios</a></p>
 
       <form id="buscador" class="search-form" autocomplete="off">
         <input type="text" id="q" name="q" placeholder="Barrio, calle o palabra clave…" aria-label="Buscar por texto">
@@ -81,8 +104,10 @@
           <option value="ph">PH</option>
           <option value="local">Local</option>
         </select>
-        <input type="number" id="precioMin" name="precioMin" placeholder="Precio mín" min="0" aria-label="Precio mínimo">
-        <input type="number" id="precioMax" name="precioMax" placeholder="Precio máx" min="0" aria-label="Precio máximo">
+        <input type="number" id="precioMin" name="precioMin" placeholder="Precio mín" min="0"
+          aria-label="Precio mínimo">
+        <input type="number" id="precioMax" name="precioMax" placeholder="Precio máx" min="0"
+          aria-label="Precio máximo">
         <button type="submit" class="btn">Buscar</button>
       </form>
     </div>
@@ -115,7 +140,8 @@
     <div class="container narrow">
       <h2>Quiénes somos</h2>
       <p>
-        Somos <strong>Perez Carrasco</strong>, una inmobiliaria enfocada en brindar una experiencia cercana y transparente.
+        Somos <strong>Perez Carrasco</strong>, una inmobiliaria enfocada en brindar una experiencia cercana y
+        transparente.
         Acompañamos a nuestros clientes en cada paso del proceso para que encuentren el lugar ideal.
       </p>
     </div>
@@ -147,8 +173,10 @@
       <div class="footer-left">
         <h3>Contacto</h3>
         <ul class="contact-list">
-          <li><i class="fa-brands fa-whatsapp"></i> <a href="https://wa.me/5490000000000" target="_blank" rel="noopener">+54 9 0000 0000</a></li>
-          <li><i class="fa-regular fa-envelope"></i> <a href="mailto:contacto@perezcarrasco.com">contacto@perezcarrasco.com</a></li>
+          <li><i class="fa-brands fa-whatsapp"></i> <a href="https://wa.me/5490000000000" target="_blank"
+              rel="noopener">+54 9 0000 0000</a></li>
+          <li><i class="fa-regular fa-envelope"></i> <a
+              href="mailto:contacto@perezcarrasco.com">contacto@perezcarrasco.com</a></li>
           <li><i class="fa-solid fa-location-dot"></i> Calle Ejemplo 123, Mar del Plata</li>
         </ul>
         <div class="socials">
@@ -169,4 +197,3 @@
 
   <script src="js/app.js"></script>
 </body>
-</html>

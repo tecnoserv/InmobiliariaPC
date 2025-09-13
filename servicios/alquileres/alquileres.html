@@ -36,7 +36,7 @@
                         </button>
                         <ul class="submenu" aria-label="submenu servicios">
                             <li><a href="../ventas/ventas.html">Ventas</a></li>
-                        <!--<li><a href="alquileres.html">Alquileres</a></li>--> 
+                            <!--<li><a href="alquileres.html">Alquileres</a></li>-->
                             <li><a href="../temporarios/temporarios.html">Temporarios</a>
                             </li>
                         </ul>
@@ -46,7 +46,10 @@
 
             <!-- Logo centrado -->
             <div class="header-logo">
-                <a href="alquileres.html" class="brand">Perez <span>Carrasco</span></a>
+
+                <a href="alquileres.html" class="logo">
+                    <img src="../../logoPC.png" alt="Perez Carrasco Inmobiliaria">
+                </a>
             </div>
 
             <!-- Menú derecho -->
@@ -127,24 +130,25 @@
     </main>
 
     <!-- Contacto -->
-  <section id="contacto" class="section">
-    <div class="container narrow">
-      <h2>Contacto</h2>
-      <p>Completa el formulario a continuación.</p>
-      <form class="form-contacto" onsubmit="event.preventDefault(); alert('Gracias, te responderemos a la brevedad.');">
-        <div class="row">
-          <input type="text" placeholder="Nombre y apellido" required>
-          <input type="email" placeholder="Email" required>
+    <section id="contacto" class="section">
+        <div class="container narrow">
+            <h2>Contacto</h2>
+            <p>Completa el formulario a continuación.</p>
+            <form class="form-contacto"
+                onsubmit="event.preventDefault(); alert('Gracias, te responderemos a la brevedad.');">
+                <div class="row">
+                    <input type="text" placeholder="Nombre y apellido" required>
+                    <input type="email" placeholder="Email" required>
+                </div>
+                <div class="row">
+                    <input type="tel" placeholder="Teléfono">
+                    <input type="text" placeholder="Asunto">
+                </div>
+                <textarea rows="4" placeholder="Mensaje"></textarea>
+                <button class="btn" type="submit">Enviar</button>
+            </form>
         </div>
-        <div class="row">
-          <input type="tel" placeholder="Teléfono">
-          <input type="text" placeholder="Asunto">
-        </div>
-        <textarea rows="4" placeholder="Mensaje"></textarea>
-        <button class="btn" type="submit">Enviar</button>
-      </form>
-    </div>
-  </section>
+    </section>
 
     <!-- Footer -->
     <footer class="site-footer">
