@@ -5,21 +5,26 @@
     "operacion": "venta",
     "tipo": "departamento",
     "barrio": "Plaza Mitre",
-    "direccion": "Falucho 2300",
+    "direccion": "Falucho 2540",
     "ambientes": 2,
     "dormitorios": 1,
     "banos": 1,
-    "superficie": 45,
-    "precio": 74000000,
-    "moneda": "$",
+    "superficie": 70,
+    "precio": 130000,
+    "moneda": "U$S",
     "amenities": [
-      "balcón",
-      "lavadero"
+      "balcón saliente",
+      "cocina separada",
+      "calefaccion: TB",
+      "placard a medida"
     ],
     "imagenes": [
-      "https://images.unsplash.com/photo-1515263487990-61b07816b324?q=80&w=1200&auto=format&fit=crop"
+      "../data/img/ventas/falucho2540/falucho2540-0.jpg"
+          
+      
     ],
-    "descripcion": "Luminoso, reciclado a nuevo. A metros del centro.",
+    "portada":"../data/img/ventas/falucho2540/falucho2540-0.jpg",
+    "descripcion": "Living al frente con bacón saliente",
     "destacada": true
   },
   {

@@ -1,23 +1,33 @@
 :root {
   --bg: #ffffff;
-  --text: #1a1a1a;
-  --muted: #f5f6f7;
-  --primary: rgb(92, 117, 102);
-  --accent: rgb(0, 105, 42);
+  --text: rgb(0, 65, 26);
+  --muted: #ffffff;
+  --primary: rgb(99, 130, 111);
+  --accent: rgb(0, 107, 43);
   --border: #e6e8eb;
+  --font-brand: 'Rajdhani', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+  
 }
+
+
+
 
 * { box-sizing: border-box; }
 html, body { margin: 0; padding: 0; }
 body {
-  font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  font-family: 'Rajdhani', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
   color: var(--text);
   background: var(--bg);
   line-height: 1.5;
 }
 
-h1, h2, h3 {
-  font-family: 'Lora', Georgia, serif;
+
+/* Títulos y navegación con la del logo */
+h1, h2, h3,
+.nav-list a, .submenu-toggle {
+  font-family: var(--font-brand);
+  font-weight: 600;           /* similar al grosor del logo */
+  letter-spacing: .2px;       /* leve ajuste */
   margin: 0 0 0.5rem;
   color: var(--primary);
 }
@@ -36,11 +46,13 @@ h2 { font-size: clamp(1.4rem, 2.8vw, 2rem); }
 .section-head .ver-todo { color: var(--primary); text-decoration: none; border-bottom: 1px solid transparent; }
 .section-head .ver-todo:hover { border-bottom-color: var(--primary); }
 
+
+
 /* =======================
    Header
    ======================= */
 .site-header {
-  position: sticky;
+
   top: 0;
   z-index: 1200;
   background: rgba(255, 255, 255, 0.8);
@@ -49,12 +61,13 @@ h2 { font-size: clamp(1.4rem, 2.8vw, 2rem); }
   padding: 0 3rem;                 /* margen lateral */
   /* scroll-margin-top conviene aplicarlo en las secciones destino, no aquí */
 }
+ 
 
 .header-grid {
   display: flex;
   justify-content: center;  /* centra horizontalmente */
   align-items: center;
-  min-height: 100px;
+  
   width: 100%;
 }
 
@@ -62,8 +75,8 @@ h2 { font-size: clamp(1.4rem, 2.8vw, 2rem); }
 .subheader-toggle {
   background: none;
   border: none;
-  font-size: 1.25rem;      /* tamaño del ícono */
-  color: var(--primary);   /* color de la flecha */
+  font-size: 1rem;      /* tamaño del ícono */
+  color: var(--accent);   /* color de la flecha */
   cursor: pointer;
   margin-top: 0.4rem;      /* separación con el logo */
   display: flex;
@@ -103,7 +116,7 @@ h2 { font-size: clamp(1.4rem, 2.8vw, 2rem); }
   border: none;
   font-size: 1.25rem;
   cursor: pointer;
-  color: var(--primary);
+  color: var(--accent);
 }
 
 /* Lista y enlaces */
@@ -129,6 +142,12 @@ h2 { font-size: clamp(1.4rem, 2.8vw, 2rem); }
   background: transparent;
   border: none;
   cursor: pointer;
+
+ 
+  
+  border-radius: 10px;
+  
+  z-index: 1100;
 }
 
 /* Subrayado animado */
@@ -143,6 +162,7 @@ h2 { font-size: clamp(1.4rem, 2.8vw, 2rem); }
   background-color: var(--accent);
   transition: width 0.3s ease;
   transform-origin: center;
+  
 }
 
 .nav-list a:hover::after,
@@ -194,12 +214,25 @@ h2 { font-size: clamp(1.4rem, 2.8vw, 2rem); }
   background: var(--muted);
 }
 
-/* Mostrar submenú en desktop con hover */
-@media (hover: hover) {
-  .has-submenu:hover .submenu {
-    display: block;
-  }
+/* Flecha de Servicios: animación */
+.submenu-toggle i{
+  display: inline-block;           /* permite transformar */
+  transition: transform .25s ease; /* misma animación */
+  margin-left: .35rem;             /* espacio respecto al texto */
+  transform-origin: center;
 }
+
+/* Click/touch (cualquier dispositivo): controla apertura por clase y aria */
+.has-submenu.open > .submenu { display: block; }
+.submenu-toggle i { transition: transform .25s ease; }
+.submenu-toggle[aria-expanded="true"] i { transform: rotate(180deg); }
+
+/* Desktop con mouse (hover): también abre y rota mientras hay hover */
+@media (hover: hover) {
+  .has-submenu:hover > .submenu { display: block; }
+  .has-submenu:hover > .submenu-toggle i { transform: rotate(180deg); }
+}
+
 
 /* ===== Centrado y layout interno del SUBHEADER ===== */
 .sub-header .container {
@@ -241,7 +274,57 @@ h2 { font-size: clamp(1.4rem, 2.8vw, 2rem); }
     justify-items: center;  /* centra cada bloque */
     row-gap: .75rem;
   }
+
+  
 }
+
+
+
+
+
+/* --- SUBHEADER: altura + hover gris --- */
+:root { --subheader-pad-y: .7rem; /* altura vertical de la barra */  
+        --subheader-gutter: clamp(32px, 5vw, 72px); /* margen lateral del subheader */ }
+
+
+
+/* El alto visual de la barra lo maneja este padding */
+.sub-header .container { 
+  max-width: none;    /* full-bleed */
+  width: 100%;
+  padding-block: var(--subheader-pad-y);
+  padding-left:  calc(var(--subheader-gutter) + env(safe-area-inset-left));
+  padding-right: calc(var(--subheader-gutter) + env(safe-area-inset-right));
+}
+
+/* Dejamos el grid sin padding para no duplicar alturas */
+.subheader-grid { 
+  padding: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center; 
+}
+
+/* Enlaces del subheader: más área clickeable + hover gris */
+.sub-header .nav-list a,
+.sub-header .submenu-toggle {
+  padding: .65rem .8rem;            /* agranda vertical y horizontal */
+  border-radius: 8px;
+  transition: background .2s ease, color .2s ease;
+}
+
+.sub-header .nav-list a:hover,
+.sub-header .submenu-toggle:hover {
+  background: var(--muted);         /* mismo gris que el submenú */
+  color: var(--primary);
+}
+
+/* 3) Grupos a la izquierda y derecha, sin espacio extra */
+.sub-header .nav-left  { margin-right: auto; }
+.sub-header .nav-right { margin-left:  auto; }
+.sub-header .nav-left  .nav-list { padding-left:  0; gap: .75rem; }
+.sub-header .nav-right .nav-list { padding-right: 0; gap: .75rem; }
+
 
 
 
@@ -270,7 +353,7 @@ h2 { font-size: clamp(1.4rem, 2.8vw, 2rem); }
   gap: 0.6rem;
   background: rgba(255,255,255,0.92);
   padding: 0.8rem;
-  border-radius: 12px;
+  border-radius: 8px;
   box-shadow: 0 10px 30px rgba(0,0,0,0.25);
 }
 .search-form input, .search-form select {
@@ -280,8 +363,9 @@ h2 { font-size: clamp(1.4rem, 2.8vw, 2rem); }
   font-size: 0.95rem;
 }
 .btn {
-  background: var(--accent); border: none; color: #fff; font-weight: 600; padding: 0.6rem 1rem;
-  border-radius: 10px; cursor: pointer;
+  background: var(--primary); border: none; 
+  color: #fff; font-weight: 600; padding: 0.6rem 1rem;
+  border-radius: 8px; cursor: pointer;
 }
 .btn:hover { filter: brightness(0.95); }
 
@@ -303,15 +387,19 @@ h2 { font-size: clamp(1.4rem, 2.8vw, 2rem); }
   background: #fff;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
-.card:hover { transform: translateY(-3px); box-shadow: 0 12px 28px rgba(0,0,0,0.1); }
-.card .thumb { width: 100%; height: 200px; object-fit: cover; display: block; }
+.card:hover { transform: translateY(-3px); 
+  box-shadow: 0 12px 28px rgba(0,0,0,0.1); }
+.card .thumb { width: 100%; height: 200px; 
+  object-fit: cover; display: block; }
 .card .body { padding: 0.9rem; }
 .card .title { font-weight: 600; margin: 0 0 0.2rem; color: var(--primary); }
 .card .meta { font-size: 0.9rem; color: #555; margin-bottom: 0.5rem; }
 .card .price { font-weight: 700; color: var(--accent); }
 .badge {
-  display: inline-block; font-size: 0.75rem; font-weight: 600; padding: 0.25rem 0.5rem; border-radius: 999px;
-  background: #f0efe9; color: #6b5b36; border: 1px solid #e3dcc7; margin-right: 0.4rem;
+  display: inline-block; font-size: 0.75rem; 
+  font-weight: 600; padding: 0.25rem 0.5rem; border-radius: 999px;
+  background: #f0efe9; color: #6b5b36; 
+  border: 1px solid #e3dcc7; margin-right: 0.4rem;
 }
 
 /* =======================
@@ -335,19 +423,25 @@ h2 { font-size: clamp(1.4rem, 2.8vw, 2rem); }
    Footer
    ======================= */
 .site-footer {
-  background: #0b1623; color: #e9edf2; padding-top: 2rem; border-top: 1px solid #0a1320;
+  background: var(--primary); color: #e9edf2;
+  padding-top: 5rem; border-top: 1px solid #0a1320;
+  
+  
 }
 .footer-grid {
-  display: grid; grid-template-columns: 1.1fr auto 1fr; align-items: start; gap: 1rem; padding-bottom: 1.5rem;
+  display: grid; grid-template-columns: 1.1fr auto 1fr; 
+  align-items: start; gap: 1rem; padding-bottom: 1.5rem;
 }
 .footer-left h3 { margin-top: 0; color: #fff; }
 .contact-list { list-style: none; padding: 0; margin: 0 0 0.6rem; }
 .contact-list li { margin: 0.3rem 0; }
-.contact-list a { color: #e9edf2; text-decoration: none; border-bottom: 1px solid transparent; }
+.contact-list a { color: #e9edf2; text-decoration: none; 
+  border-bottom: 1px solid transparent; }
 .contact-list a:hover { border-bottom-color: #e9edf2; }
 .socials a { color: #e9edf2; margin-right: 0.6rem; font-size: 1.2rem; }
 .brand-footer { font-size: 1.2rem; color: #fff; }
-.copy { text-align: center; border-top: 1px solid #0f1c2d; padding: 0.8rem 0; margin: 0; color: #a9b6c7; }
+.copy { text-align: center; border-top: 1px solid #0f1c2d; 
+  padding: 0.8rem 0; margin: 0; color: #a9b6c7; }
 
 /* =======================
    Utils
@@ -411,8 +505,74 @@ h2 { font-size: clamp(1.4rem, 2.8vw, 2rem); }
   .search-form { grid-template-columns: 1fr 1fr; }
   .search-form #tipo { display: none; }
   .form-contacto .row { grid-template-columns: 1fr; }
-}
 
+ /* 2 filas centradas (arriba y abajo) */
+  .subheader-grid{
+    display: flex;
+    flex-direction: column;
+    align-items: center;   /* centra los bloques */
+    gap: .5rem;
+    padding: 0;
+  }
+
+  /* Los dos grupos ocupan todo el ancho y se centran */
+  .sub-header .nav-left,
+  .sub-header .nav-right{
+    width: 100%;
+    display: flex;
+    justify-content: center; /* centra el grupo */
+  }
+
+  /* Listas centradas y compactas */
+  .sub-header .nav-left  .nav-list,
+  .sub-header .nav-right .nav-list{
+    display: flex;
+    justify-content: center; /* centra los ítems */
+    flex-wrap: wrap;
+    gap: .35rem .6rem;
+    margin: 0;
+    padding: 0;
+  }
+  /* Botones compactos */
+  .sub-header .nav-list a,
+  .sub-header .submenu-toggle{
+    display: inline-flex;
+    align-items: center;
+    padding: .45rem .6rem;
+    border-radius: 8px;
+    font-size: .95rem;
+  }
+
+  /* Submenú de Servicios como popover (igual a desktop) */
+  .sub-header .has-submenu { position: relative; }
+  .sub-header .submenu{
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 0;
+    min-width: min(240px, 85vw);
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    box-shadow: 0 12px 28px rgba(0,0,0,.12);
+    display: none;
+    z-index: 5600;                 /* encima del hero */
+
+
+    /* (opcional) centrar el popover de "Servicios" bajo el botón */
+  .sub-header .has-submenu{ position: relative; }
+  .sub-header .submenu{
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 50%;
+    transform: translateX(-50%); /* queda centrado respecto al botón */
+    min-width: min(240px, 85vw);
+  }
+  }
+  .sub-header .has-submenu.open > .submenu{ display: block; }
+
+  
+
+}
 
 
 
@@ -496,5 +656,98 @@ h2 { font-size: clamp(1.4rem, 2.8vw, 2rem); }
 
 .propiedad a:hover {
   background: #0d1b2a;
+}
+
+
+
+
+
+
+
+/* =======================
+   subheader movimiento
+   ======================= */
+
+   /* Subheader colapsado/expandido */
+.sub-header {
+  background: #f4f4f4d1;
+  backdrop-filter: saturate(180%) blur(10px);
+  border-bottom: 1px solid var(--border);
+  position: sticky;    /* o 'relative' si no querés que se pegue arriba al scrollear */
+  top: 0;
+  z-index: 6000;       /* por encima del hero */
+ 
+  max-height: 0;
+  opacity: 0;
+  transform: translateY(-8px);
+  transition: max-height .35s ease, opacity .25s ease, transform .35s ease;
+  
+}
+.sub-header.is-open {
+  max-height: 500px;   /* ajustá si necesitás más */
+  opacity: 1;
+  transform: translateY(0);
+  
+}
+
+/* Animación de la flecha */
+.subheader-toggle i {
+  transition: transform .25s ease;
+}
+.subheader-toggle[aria-expanded="true"] i {
+  transform: rotate(180deg);
+}
+
+.header-logo { cursor: pointer; }
+
+
+
+
+/* === 2) El dropdown debe flotar y tener una capa alta === */
+.has-submenu{ position: relative; }       /* ancla para el absoluto */
+.submenu{
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 7000;                          /* > header y > hero */
+}
+
+
+
+/* Footer con logo de fondo (marca de agua) */
+.site-footer {
+  position: relative;          /* para posicionar el ::before */
+  overflow: hidden;            /* por si el logo se sale */
+}
+
+/* Versión general (desktop/tablet) */
+.site-footer::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("../logoPC.png"); /* ← ruta del logo */
+  background-repeat: no-repeat;
+  background-position: center, 5% center;       /* posición general */
+  background-size: clamp(400px, 30vw, 620px); /* tamaño responsive */
+  opacity: 0.4;                               /* transparencia */
+  filter: grayscale(100%);                     /* opcional: desaturar */
+  mix-blend-mode: multiply;                    /* si el fondo es claro */
+  pointer-events: none;                        /* no tapa clics */
+  z-index: 0;
+}
+
+/* Asegura que el contenido del footer quede por encima del logo */
+.site-footer > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Versión móvil (≤ 560px) */
+@media (max-width: 560px) {
+  .site-footer::before {
+    background-position: center ;           /* centrado arriba */
+    background-size: min(100vw, 560px);         /* un poco más chico */
+    opacity: 0.4;                              /* leve más visible en mobile */
+  }
 }
 

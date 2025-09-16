@@ -19,6 +19,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
   });
 
+  
+
   // Cargar propiedades desde JSON
   try {
     const res = await fetch('data/propiedades.json');
@@ -128,3 +130,55 @@ function escapeHtml(str='') {
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&#039;');
 }
+
+
+(() => {
+  const panel  = document.getElementById('subheader') || document.querySelector('.sub-header');
+  const toggle = document.querySelector('.subheader-toggle');                 // la flecha
+  const logo   = document.querySelector('.header-logo a, .header-logo, .brand'); // tu logo (ajusta si tu selector es otro)
+
+  if (!panel || (!toggle && !logo)) return;
+
+  function setOpen(open){
+    panel.classList.toggle('is-open', open);
+    if (toggle) toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+  }
+
+  function togglePanel(e){
+    if (e) e.preventDefault();   // evita navegar si el logo es <a>
+    setOpen(!panel.classList.contains('is-open'));
+  }
+
+  // Click en la flecha (ya lo tenías, pero lo dejamos unificado)
+  if (toggle) toggle.addEventListener('click', togglePanel);
+
+  // Click en el logo: hace lo mismo que la flecha
+  if (logo)   logo.addEventListener('click', togglePanel);
+
+  // Cerrar al hacer click fuera
+  /*document.addEventListener('click', (e) => {
+    if (!panel.contains(e.target) && !toggle?.contains(e.target) && !logo?.contains(e.target)) {
+      setOpen(false);
+    }
+  });*/
+
+  // Escape para cerrar
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') setOpen(false); });
+})();
+
+const items = document.querySelectorAll('.has-submenu');
+  items.forEach(li => {
+    const toggle = li.querySelector('.submenu-toggle');
+    const submenu = li.querySelector('.submenu');
+    if (!toggle || !submenu) return;
+
+    // Asegurá que el botón no “envíe” formularios si los hubiera
+    if (!toggle.hasAttribute('type')) toggle.setAttribute('type', 'button');
+
+      const setOpen = (open) => {
+        li.classList.toggle('open', open ?? !li.classList.contains('open'));
+        toggle.setAttribute('aria-expanded', li.classList.contains('open'));
+      };
+  
+      toggle.addEventListener('click', () => setOpen());
+    });
