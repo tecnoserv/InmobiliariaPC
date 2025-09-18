@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Propiedad | Inmobiliaria</title>
+
+  <!-- SEO / Open Graph básicos: se reemplazan dinámicamente desde JS -->
+  <meta name="description" content="Detalle de propiedad" />
+  <meta property="og:title" content="Propiedad" />
+  <meta property="og:description" content="Detalle de propiedad" />
+  <meta property="og:type" content="article" />
+  <meta property="og:image" content="img/cover.jpg" />
+
+  <link rel="stylesheet" href="css/styles.css">
+  
+</head>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const btn = document.querySelector('.subheader-toggle');
+    const panel = document.getElementById('subheader');
+    if (!btn || !panel) return;
+
+    const open = () => {
+      panel.classList.add('is-open');
+      panel.setAttribute('aria-hidden', 'false');
+      btn.setAttribute('aria-expanded', 'true');
+    };
+    const close = () => {
+      panel.classList.remove('is-open');
+      panel.setAttribute('aria-hidden', 'true');
+      btn.setAttribute('aria-expanded', 'false');
+    };
+
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      panel.classList.contains('is-open') ? close() : open();
+    });
+
+    document.addEventListener('click', (e) => {
+      const opened = document.querySelector('.has-submenu.open');
+      if (opened && !opened.contains(e.target)) {
+        opened.classList.remove('open');
+        opened.querySelector('.submenu-toggle')?.setAttribute('aria-expanded', 'false');
+      }
+    }, { passive: true });
+
+
+
+  });
+</script>
+
+
+
+<body>
+
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container header-grid">
+      <div class="header-logo">
+        <a class="logo">
+          <img src="logoPC.png" alt="Perez Carrasco Inmobiliaria">
+        </a>
+
+        <!-- Flecha bajo el logo -->
+        <button class="subheader-toggle" aria-controls="subheader" aria-expanded="false" aria-label="Abrir menú">
+          <i class="fa-solid fa-chevron-down"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Sub-header (panel deslizante fijo) -->
+  <nav id="subheader" class="sub-header" aria-hidden="true">
+    <div class="container subheader-grid">
+
+      <!-- Menú izquierda -->
+      <nav class="header-nav nav-left" aria-label="Menú principal - izquierda">
+        <ul class="nav-list">
+          <li><a href="#inicio">Buscar</a></li>
+          <li class="has-submenu">
+            <button class="submenu-toggle" aria-haspopup="true" aria-expanded="false">
+              Servicios <i class="fa-solid fa-chevron-down"></i>
+            </button>
+            <ul class="submenu" aria-label="submenu servicios">
+              <li><a href="servicios/ventas/ventas.html">Ventas</a></li>
+              <li><a href="servicios/alquileres/alquileres.html">Alquileres</a></li>
+              <li><a href="servicios/temporarios/temporarios.html">Temporarios</a></li>
+            </ul>
+          <li><a href="#destacadas">Destacadas</a></li>
+          </li>
+        </ul>
+      </nav>
+
+      <!-- Menú derecha -->
+      <nav class="header-nav nav-right" aria-label="Menú principal - derecha">
+        <ul class="nav-list">
+          <li><a href="#quienes-somos">Quiénes somos</a></li>
+          <li><a href="#contacto">Contacto</a></li>
+        </ul>
+      </nav>
+
+    </div>
+  </nav>
+
+
+  <main id="propiedad" class="container">
+    <article class="layout">
+      <!-- Galería -->
+      <section class="galeria" aria-label="Galería de imágenes">
+        <div class="galeria-principal">
+          <button class="ctrl prev" aria-label="Imagen anterior">‹</button>
+          <img id="img-principal" src="" alt="" loading="eager" />
+          <button class="ctrl next" aria-label="Imagen siguiente">›</button>
+        </div>
+        <div class="thumbs" id="thumbs"></div>
+      </section>
+
+      <!-- Info principal -->
+      <section class="info">
+        <h1 id="titulo">Título de la propiedad</h1>
+        <p class="meta" id="meta">Tipo • Barrio • Dirección • Superficie</p>
+
+        <div class="precio-op">
+          <span class="op-badge" id="operacion">venta</span>
+          <span class="precio" id="precio">U$S 000.000</span>
+        </div>
+
+        <ul class="amenities" id="amenities">
+          <!-- badges de features -->
+        </ul>
+
+        <div class="descripcion">
+          <h2>Descripción</h2>
+          <p id="descripcion"></p>
+        </div>
+
+        <div class="caracteristicas">
+          <h2>Características</h2>
+          <ul id="caracteristicas-list">
+            <!-- li dinámicos -->
+          </ul>
+        </div>
+
+        <div class="acciones">
+          <a id="btn-whatsapp" class="btn primary" target="_blank" rel="noopener">Consultar por WhatsApp</a>
+          <a id="btn-email" class="btn" href="#">Enviar consulta</a>
+          <button id="btn-compartir" class="btn">Compartir</button>
+        </div>
+
+        <!-- JSON-LD SEO -->
+        <script id="ld-json" type="application/ld+json">{}</script>
+      </section>
+
+      <!-- Aside fijo -->
+      <aside class="sidebar">
+        <div class="card sticky">
+          <div class="precio-lg" id="precio-lg">U$S 000.000</div>
+          <div class="datos-rapidos" id="datos-rapidos">
+            <!-- m2, ambientes, dormitorios, baños -->
+          </div>
+          <a id="btn-whatsapp-side" class="btn primary" target="_blank" rel="noopener">Consultar ahora</a>
+          <p class="id-ref">ID: <span id="id-ref"></span></p>
+        </div>
+
+        <div class="card">
+          <h3>Ubicación</h3>
+          <p id="direccion"></p>
+          <!-- Si querés, podés incrustar un mapa estático más adelante -->
+        </div>
+      </aside>
+    </article>
+
+    <section class="relacionadas">
+      <h2>Propiedades relacionadas</h2>
+      <div id="relacionadas-grid" class="grid-cards"></div>
+    </section>
+  </main>
+
+  <!-- Contacto -->
+  <section id="contacto" class="section">
+    <div class="container narrow">
+      <h2>Contacto</h2>
+      <p>Completá el formulario a continuación.</p>
+      <form class="form-contacto" onsubmit="event.preventDefault(); alert('Gracias, te responderemos a la brevedad.');">
+        <div class="row">
+          <input type="text" placeholder="Nombre y apellido" required>
+          <input type="email" placeholder="Email" required>
+        </div>
+        <div class="row">
+          <input type="tel" placeholder="Teléfono">
+          <input type="text" placeholder="Asunto">
+        </div>
+        <textarea rows="4" placeholder="Mensaje"></textarea>
+        <button class="btn" type="submit">Enviar</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div class="footer-left">
+        <h3>Contacto</h3>
+        <ul class="contact-list">
+          <li><i class="fa-regular fa-envelope"></i> <a
+              href="mailto:contacto@perezcarrasco.com">contacto@perezcarrasco.com</a></li>
+          <li><i class="fa-brands fa-whatsapp"></i> <a href="https://wa.me/542235685409" target="_blank"
+              rel="noopener">WhatsApp</a></li>
+          <li><i class="fa-solid fa-location-dot"></i> Avenida siempre viva 123, Mar del Plata</li>
+        </ul>
+        <div class="socials">
+          <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+          <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook"></i></a>
+          <a href="#" aria-label="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
+        </div>
+      </div>
+      <div class="footer-center">
+
+      </div>
+      <div class="footer-right"></div>
+    </div>
+    <div class="container">
+      <p class="copy">© <span id="anio"></span> Perez Carrasco. Todos los derechos reservados.</p>
+    </div>
+  </footer>
+
+  <script src="js/propiedad.js" defer></script>
+</body>
+
+</html>

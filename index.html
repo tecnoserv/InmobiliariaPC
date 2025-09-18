@@ -11,7 +11,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
 
- 
+
   <link rel="stylesheet" href="css/styles.css" />
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
@@ -62,7 +62,7 @@
   <header class="site-header">
     <div class="container header-grid">
       <div class="header-logo">
-        <a href="index.html" class="logo">
+        <a class="logo">
           <img src="logoPC.png" alt="Perez Carrasco Inmobiliaria">
         </a>
 
@@ -107,7 +107,7 @@
     </div>
   </nav>
 
- 
+
 
 
   <!-- Hero -->
@@ -151,6 +151,111 @@
       <div id="gridDestacadas" class="grid-cards" aria-live="polite"></div>
     </div>
   </section>
+
+  <section id="disponibles" class="section" style="padding:40px">
+    <h2>Propiedades disponibles</h2>
+    <div id="grid-disponibles" class="disponibles"></div>
+    <div>
+      <h2></h2>
+      
+    </div>
+    <div class="center mt-3">
+  <button id="ver-mas" class="btn">Ver más propiedades</button>
+</div>
+
+  </section>
+
+
+  <script>
+    const API = "https://tokko-proxy.tecno-serv00.workers.dev/property?page=1&limit=24";
+
+    function portada(p) {
+      return p?.cover_picture?.big
+        || p?.cover_picture?.thumb
+        || p?.photos?.[0]?.big
+        || p?.photos?.[0]?.thumb
+        || "https://via.placeholder.com/800x450?text=Propiedad";
+    }
+    function precio(p) {
+      if (!p?.web_price) return "Consultar";
+      const cur = (p.currency || "U$S");
+      return `${cur} ${Number(p.web_price).toLocaleString("es-AR")}`;
+    }
+    function meta(p) {
+      const parts = [];
+      if (p?.room_amount) parts.push(`${p.room_amount} amb.`);
+      if (p?.surface) parts.push(`${p.surface} m²`);
+      if (p?.bathroom_amount) parts.push(`${p.bathroom_amount} baño${p.bathroom_amount > 1 ? "s" : ""}`);
+      return parts.join(" • ");
+    }
+    function opBadge(p) {
+      // intenta deducir operación (1 venta, 2 alquiler, 3 temporario) si viene del API
+      const op = p?.operation_type || p?.operation_types?.[0];
+      if (op === 1) return `<span class="badge">Venta</span>`;
+      if (op === 2) return `<span class="badge">Alquiler</span>`;
+      if (op === 3) return `<span class="badge">Temporario</span>`;
+      return ""; // no mostrar si no está
+    }
+
+    function card(p) {
+      const id = p.id || p.property_id;
+      const img = portada(p);
+      const title = p.publication_title || p.address || "Propiedad";
+      const metaTxt = meta(p);
+      const priceTxt = precio(p);
+
+      return `
+    <article class="card">
+      <!-- si preferís tu wrapper .card-media, cambialo por:
+           <a href="propiedad.html?id=${id}" class="card-media"><img src="${img}" alt="${title}"></a> -->
+      <a href="propiedad.html?id=${id}">
+        <img src="${img}" alt="${title}" class="thumb" loading="lazy">
+      </a>
+
+      <div class="body">
+        <div class="mb-2">${opBadge(p)}</div>
+        <h3 class="title">${title}</h3>
+        <p class="meta">${metaTxt || "&nbsp;"}</p>
+        <p class="price">${priceTxt}</p>
+        <a href="propiedad.html?id=${id}" class="btn">Ver más</a>
+      </div>
+    </article>
+  `;
+    }
+
+    let page = 1;
+const limit = 9;
+
+async function cargarDisponibles(append = false) {
+  const grid = document.getElementById("grid-disponibles");
+  if (!append) grid.innerHTML = "<p>Cargando propiedades…</p>";
+  try {
+    const r = await fetch(`https://tokko-proxy.tecno-serv00.workers.dev/property?page=${page}&limit=${limit}`);
+    const data = await r.json();
+    const items = data.objects || data.results || [];
+    const html = items.map(card).join("");
+    if (append) {
+      grid.insertAdjacentHTML("beforeend", html);
+    } else {
+      grid.innerHTML = html || "<p>No hay propiedades.</p>";
+    }
+  } catch (e) {
+    console.error(e);
+    grid.innerHTML = "<p>Error al cargar propiedades.</p>";
+  }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  cargarDisponibles();
+  document.getElementById("ver-mas")?.addEventListener("click", () => {
+    page++;
+    cargarDisponibles(true);
+  });
+});
+  </script>
+
+  
+
 
   <!-- Listado / Resultados -->
   <section id="listado" class="section bg-muted">
@@ -214,7 +319,7 @@
         </div>
       </div>
       <div class="footer-center">
-        
+
       </div>
       <div class="footer-right"></div>
     </div>

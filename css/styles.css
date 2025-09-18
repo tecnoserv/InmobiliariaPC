@@ -375,7 +375,17 @@ h2 { font-size: clamp(1.4rem, 2.8vw, 2rem); }
 /* =======================
    Cards
    ======================= */
-.grid-cards {
+.card-media{
+  display:block;
+  aspect-ratio: 16/9;  /* o 4/3 */
+  border-radius:12px;
+  overflow:hidden;
+  background:#eef1f5;
+}
+.card-media img{ width:100%; height:100%; object-fit:cover; display:block; }
+
+
+.grid-cards, .disponibles {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 1.2rem;
@@ -401,6 +411,14 @@ h2 { font-size: clamp(1.4rem, 2.8vw, 2rem); }
   background: #f0efe9; color: #6b5b36; 
   border: 1px solid #e3dcc7; margin-right: 0.4rem;
 }
+
+a.btn {
+  text-decoration: none;
+}
+
+
+@media (max-width: 900px){ .disponibles { grid-template-columns: repeat(2, minmax(0,1fr)); } }
+@media (max-width: 560px){ .disponibles { grid-template-columns: 1fr; } }
 
 /* =======================
    Contacto
@@ -751,3 +769,12 @@ h2 { font-size: clamp(1.4rem, 2.8vw, 2rem); }
   }
 }
 
+
+
+
+
+/* =======================
+   Sección "Propiedades disponibles" en index.html
+   ======================= */
+
+   
