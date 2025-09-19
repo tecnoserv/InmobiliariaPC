@@ -42,7 +42,7 @@ export default {
   <p>Service OK. Usá los endpoints:</p>
   <ul>
     <li><a href="/health">/health</a></li>
-    <li><a href="/property?page=1&limit=6">/property?page=1&limit=6</a> (listado)</li>
+    <li><a href="/property?page=1&limit=24">/property?page=1&limit=24</a> (listado)</li>
     <li><a href="/property?id=12345">/property?id=12345</a> (detalle)</li>
   </ul>
   <hr>

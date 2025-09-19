@@ -1,6 +1,6 @@
 name = "tokko-proxy"
 main = "src/index.ts"
-compatibility_date = "2025-09-17"
+compatibility_date = "2025-09-19"
 workers_dev = true
 account_id = "34fd0e7d3dd8a539f2062c156215fb9c"
 

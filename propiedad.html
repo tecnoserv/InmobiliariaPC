@@ -52,6 +52,34 @@
   });
 </script>
 
+<!--<script type="module">
+  import { PROXY } from './js/config.js';
+
+  const $out = document.querySelector('#detalle'); // crea un contenedor con este id
+  const id = new URLSearchParams(location.search).get('id');
+
+  if (!id) {
+    $out.textContent = 'Falta el parámetro ?id=';
+  } else {
+    const url = `${PROXY}/property?${new URLSearchParams({ id })}`;
+    fetch(url)
+      .then(r => r.ok ? r.json() : Promise.reject(`HTTP ${r.status}`))
+      .then(data => {
+        const p = data.objects?.[0] ?? data; // por si el proxy envía {objects:[]}
+        if (!p) throw new Error('Propiedad no encontrada');
+
+        // Render mínimo (ajustá a tu layout):
+        $out.innerHTML = `
+          <h1>${p.title ?? p.publication_title ?? p.address ?? 'Propiedad'}</h1>
+          <p><strong>ID:</strong> ${p.id ?? p.property_id ?? '(s/d)'}</p>
+        `;
+      })
+      .catch(err => {
+        console.error(err);
+        $out.textContent = 'No se encontró la propiedad.';
+      });
+  }
+</script>-->
 
 
 <body>
@@ -229,6 +257,8 @@
   </footer>
 
   <script src="js/propiedad.js" defer></script>
+  
+
 </body>
 
 </html>

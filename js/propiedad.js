@@ -4,6 +4,9 @@
 const WHATSAPP_NUM = "2233048966"; // sin + ni 0 ni 15
 const EMAIL = "estudiouno@example.com";
 
+import { PROXY } from "./config.js";
+
+
 // SI USÁS JSON:
 const DATA_URL = "data/propiedades.json"; // <-- ajustá ruta real si hace falta
 
@@ -13,14 +16,16 @@ const DATA_URL = "data/propiedades.json"; // <-- ajustá ruta real si hace falta
 const TOKKO_API_KEY = "badb8dc018766247dae1fd1416a428b993ee1bc1"; // <— reemplazá
 const TOKKO_BASE = "https://api.tokkobroker.com";
 
-// Elegí publications o properties según tu flujo real.
-// Dejo publications por defecto; si usás otro, cambiá la URL dentro de fetchTokkoById.
+
+
 async function fetchTokkoById(id) {
-  const url = `${TOKKO_BASE}/v1/publications/${encodeURIComponent(id)}?key=${TOKKO_API_KEY}`;
+  const url = `${PROXY}publication/${encodeURIComponent(id)}?ts=${Date.now()}`;
   const resp = await fetch(url, { cache: "no-store" });
-  if (!resp.ok) throw new Error(`Tokko error ${resp.status}`);
-  return await resp.json();
+  if (!resp.ok) throw new Error(`Proxy ${resp.status}`);
+  const data = await resp.json();
+  return data?.data ?? data; // por si el Worker envuelve en {data: ...}
 }
+
 
 // Normalizador -> adapta la respuesta de Tokko al shape que tu renderProp ya entiende
 function mapTokkoToLocal(raw) {
@@ -53,12 +58,54 @@ function mapTokkoToLocal(raw) {
     null;
 
   // Imágenes
-  let imagenes =
-    (p.images || p.pictures || [])
-      .map(x => x?.url || x?.image || x?.src)
-      .filter(Boolean);
+  function extractFotos(pub){
+  let imgs = [];
 
-  if (!imagenes.length && p.cover?.url) imagenes = [p.cover.url];
+  // photos con image anidado
+  if (Array.isArray(pub.photos)) {
+    for (const ph of pub.photos) {
+      if (!ph) continue;
+      if (typeof ph === "string") { imgs.push(ph); continue; }
+      if (ph.url) imgs.push(ph.url);
+      if (ph.src) imgs.push(ph.src);
+      if (ph.image) {
+        if (typeof ph.image === "string") imgs.push(ph.image);
+        else if (typeof ph.image === "object") {
+          imgs.push(
+            ph.image.url || ph.image.original || ph.image.large ||
+            ph.image.big || ph.image.medium || ph.image.small
+          );
+        }
+      }
+    }
+  }
+
+  // media.photos
+  if (!imgs.length && Array.isArray(pub.media?.photos)) {
+    for (const x of pub.media.photos) {
+      if (!x) continue;
+      imgs.push(x.url || x.src || x.large || x.original || x?.image?.url);
+    }
+  }
+
+  // images / pictures genérico
+  if (!imgs.length && Array.isArray(pub.images || pub.pictures)) {
+    for (const x of (pub.images || pub.pictures)) {
+      if (!x) continue;
+      if (typeof x === "string") imgs.push(x);
+      else {
+        imgs.push(x.url || x.src || x.image || x?.image?.url || x?.image?.large);
+      }
+    }
+  }
+
+  // cover
+  if (!imgs.length && pub.cover?.url) imgs.push(pub.cover.url);
+
+  // limpiar duplicados/falsy
+  return [...new Set(imgs.filter(Boolean))];
+}
+
 
   // Campos varios
   const tipo = p.type || p.property_type || p.category || "";
